@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAnimal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Animal xsi:type="Mammal">
+    <Name>Сімба</Name>
+    <Health>95</Health>
+    <Hunger>40</Hunger>
+  </Animal>
+  <Animal xsi:type="Bird">
+    <Name>Кеша</Name>
+    <Health>80</Health>
+    <Hunger>10</Hunger>
+  </Animal>
+</ArrayOfAnimal>
