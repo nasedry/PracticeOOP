@@ -16,8 +16,12 @@ namespace ZooSimulator
         private readonly object _lock = new object();
 
         public string Name { get; set; }
-        public IFeedingStrategy? FeedingStrategy { get; set; }
         public string Category { get; set; }
+        public string Region { get; set; }
+        public IFeedingStrategy? FeedingStrategy { get; set; }
+        
+        // Відкриваємо безпечний доступ до спостерігачів для збереження в JSON
+        public IReadOnlyList<IObserver> Observers => _observers;
 
         public int Hunger
         {
@@ -35,22 +39,31 @@ namespace ZooSimulator
             }
         }
 
-        protected Animal(string name, string category, int health, int hunger)
+        protected Animal(string name, string category, string region, int health, int hunger)
         {
             Name = name;
             Category = category;
+            Region = region;
             _health = health;
             _hunger = hunger;
         }
 
         public void SetFeedingStrategy(IFeedingStrategy strategy) => FeedingStrategy = strategy;
-        public void RegisterObserver(IObserver observer) => _observers.Add(observer);
+
+        public void RegisterObserver(IObserver observer)
+        {
+            if (observer.Specialization.ToLower() != Category.ToLower())
+                throw new ZooException($"Не вдалося призначити лікаря! Ветеринар {observer.Name} спеціалізується лише на категорії '{observer.Specialization}', тому він не може лікувати категорію '{Category}'.");
+            
+            if (!_observers.Contains(observer))
+                _observers.Add(observer);
+        }
         
         private void NotifyObservers()
         {
             foreach (var observer in _observers)
             {
-                observer.Update(Name, _health);
+                observer.Update(Name, Category, _health);
             }
         }
 
@@ -74,28 +87,35 @@ namespace ZooSimulator
 
     public class GenericAnimal : Animal 
     { 
-        public GenericAnimal(string name, string category, int health, int hunger) : base(name, category, health, hunger) { } 
+        public GenericAnimal(string name, string category, string region, int health, int hunger) 
+            : base(name, category, region, health, hunger) { } 
     }
 
     public interface IZooFactory
     {
-        Animal CreateCustomAnimal(string name, string category, string dietChoice);
+        Animal CreateAnimal(string name, string category, string dietChoice);
     }
 
-    public class UniversalZooFactory : IZooFactory
+    public abstract class BaseZooFactory : IZooFactory
     {
-        public Animal CreateCustomAnimal(string name, string category, string dietChoice)
+        protected abstract string RegionName { get; }
+
+        public Animal CreateAnimal(string name, string category, string dietChoice)
         {
-            var animal = new GenericAnimal(name, category, 100, 30);
+            var animal = new GenericAnimal(name, category, RegionName, 100, 30);
             
-            if (dietChoice == "1")
-                animal.SetFeedingStrategy(new CarnivoreFeeding());
-            else if (dietChoice == "2")
-                animal.SetFeedingStrategy(new HerbivoreFeeding());
-            else
-                animal.SetFeedingStrategy(new OmnivoreFeeding());
+            if (dietChoice == "1") animal.SetFeedingStrategy(new CarnivoreFeeding());
+            else if (dietChoice == "2") animal.SetFeedingStrategy(new HerbivoreFeeding());
+            else animal.SetFeedingStrategy(new OmnivoreFeeding());
 
             return animal;
         }
     }
+
+    public class AfricanZooFactory : BaseZooFactory { protected override string RegionName => "Африканський біом"; }
+    public class AustralianZooFactory : BaseZooFactory { protected override string RegionName => "Австралійський біом"; }
+    public class AsianZooFactory : BaseZooFactory { protected override string RegionName => "Азіатський біом"; }
+    public class EuropeanZooFactory : BaseZooFactory { protected override string RegionName => "Європейський біом"; }
+    public class ArcticZooFactory : BaseZooFactory { protected override string RegionName => "Арктичний біом"; }
+    public class SouthAmericanZooFactory : BaseZooFactory { protected override string RegionName => "Південноамериканський біом"; }
 }

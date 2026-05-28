@@ -1,26 +1,106 @@
 {
-  "ZooName": "Універсальний Симулятор Зоопарку",
+  "ZooName": "Глобальний Автоматизований Зоопарк",
   "Animals": [
-    {
-      "Name": "лелека",
-      "Category": "Птах",
-      "DietType": "Травоїдна",
-      "Health": 50,
-      "Hunger": 65
-    },
     {
       "Name": "Лев",
       "Category": "Ссавець",
+      "Region": "Африканський біом",
       "DietType": "Хижак",
       "Health": 100,
-      "Hunger": 55
+      "Hunger": 74,
+      "LinkedVets": [
+        "Йосип"
+      ]
     },
     {
-      "Name": "Носоріг",
+      "Name": "Кенгуру",
       "Category": "Ссавець",
+      "Region": "Австралійський біом",
+      "DietType": "Травоїдна",
+      "Health": 100,
+      "Hunger": 74,
+      "LinkedVets": [
+        "Дмитро"
+      ]
+    },
+    {
+      "Name": "Панда",
+      "Category": "Ссавець",
+      "Region": "Азіатський біом",
+      "DietType": "Травоїдна",
+      "Health": 100,
+      "Hunger": 74,
+      "LinkedVets": [
+        "Йосип"
+      ]
+    },
+    {
+      "Name": "Орел",
+      "Category": "Птах",
+      "Region": "Європейський біом",
       "DietType": "Хижак",
       "Health": 100,
-      "Hunger": 50
+      "Hunger": 74,
+      "LinkedVets": [
+        "Анна"
+      ]
+    },
+    {
+      "Name": "Пінгвін",
+      "Category": "Птах",
+      "Region": "Арктичний біом",
+      "DietType": "Всеїдна",
+      "Health": 100,
+      "Hunger": 74,
+      "LinkedVets": [
+        "Марія"
+      ]
+    },
+    {
+      "Name": "Алігатор",
+      "Category": "Рептилія",
+      "Region": "Південноамериканський біом",
+      "DietType": "Хижак",
+      "Health": 100,
+      "Hunger": 74,
+      "LinkedVets": [
+        "Максим"
+      ]
+    },
+    {
+      "Name": "Слон",
+      "Category": "Ссавець",
+      "Region": "Африканський біом",
+      "DietType": "Травоїдна",
+      "Health": 100,
+      "Hunger": 70,
+      "LinkedVets": []
+    }
+  ],
+  "Veterinarians": [
+    {
+      "Name": "Йосип",
+      "Specialization": "Ссавець"
+    },
+    {
+      "Name": "Анна",
+      "Specialization": "Птах"
+    },
+    {
+      "Name": "Максим",
+      "Specialization": "Рептилія"
+    },
+    {
+      "Name": "Олена",
+      "Specialization": "Риба"
+    },
+    {
+      "Name": "Дмитро",
+      "Specialization": "Ссавець"
+    },
+    {
+      "Name": "Марія",
+      "Specialization": "Птах"
     }
   ]
 }
