@@ -10,6 +10,8 @@ namespace ZooSimulator
 {
     class Program
     {
+        private const string SaveFilePath = "zoo_state.json";
+
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -17,6 +19,39 @@ namespace ZooSimulator
             IZooFactory zooFactory = new UniversalZooFactory();
             List<Animal> zooAnimals = new List<Animal>();
             Veterinarian activeVet = new Veterinarian("Доктор Дмитро");
+
+            if (File.Exists(SaveFilePath))
+            {
+                try
+                {
+                    string jsonInput = File.ReadAllText(SaveFilePath);
+                    var importedState = JsonSerializer.Deserialize<ZooStateDto>(jsonInput);
+
+                    if (importedState != null && importedState.Animals != null)
+                    {
+                        foreach (var dto in importedState.Animals)
+                        {
+                            string dietChoice = dto.DietType == "Хижак" ? "1" : 
+                                                dto.DietType == "Травоїдна" ? "2" : "3";
+
+                            var animal = zooFactory.CreateCustomAnimal(dto.Name, dto.Category, dietChoice);
+                            animal.Health = dto.Health;
+                            animal.Hunger = dto.Hunger;
+                            animal.RegisterObserver(activeVet);
+
+                            zooAnimals.Add(animal);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Помилка автоматичного завантаження даних: {ex.Message}");
+                    Console.ResetColor();
+                    Console.WriteLine("Натисніть Enter, щоб продовжити з порожнім зоопарком...");
+                    Console.ReadLine();
+                }
+            }
 
             Task.Run(async () =>
             {
@@ -244,7 +279,7 @@ namespace ZooSimulator
                         try
                         {
                             string jsonOutput = JsonSerializer.Serialize(exportState, serializerOptions);
-                            File.WriteAllText("zoo_state.json", jsonOutput);
+                            File.WriteAllText(SaveFilePath, jsonOutput);
 
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("-> Дані успішно збережено у файл 'zoo_state.json'!");

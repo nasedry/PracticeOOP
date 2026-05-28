@@ -5,8 +5,22 @@
       "Name": "лелека",
       "Category": "Птах",
       "DietType": "Травоїдна",
+      "Health": 50,
+      "Hunger": 65
+    },
+    {
+      "Name": "Лев",
+      "Category": "Ссавець",
+      "DietType": "Хижак",
       "Health": 100,
-      "Hunger": 35
+      "Hunger": 55
+    },
+    {
+      "Name": "Носоріг",
+      "Category": "Ссавець",
+      "DietType": "Хижак",
+      "Health": 100,
+      "Hunger": 50
     }
   ]
 }
