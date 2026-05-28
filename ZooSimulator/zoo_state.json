@@ -6,8 +6,8 @@
       "Category": "Ссавець",
       "Region": "Африканський біом",
       "DietType": "Хижак",
-      "Health": 100,
-      "Hunger": 74,
+      "Health": 0,
+      "Hunger": 100,
       "LinkedVets": [
         "Йосип"
       ]
@@ -17,8 +17,8 @@
       "Category": "Ссавець",
       "Region": "Австралійський біом",
       "DietType": "Травоїдна",
-      "Health": 100,
-      "Hunger": 74,
+      "Health": 0,
+      "Hunger": 100,
       "LinkedVets": [
         "Дмитро"
       ]
@@ -28,8 +28,8 @@
       "Category": "Ссавець",
       "Region": "Азіатський біом",
       "DietType": "Травоїдна",
-      "Health": 100,
-      "Hunger": 74,
+      "Health": 0,
+      "Hunger": 100,
       "LinkedVets": [
         "Йосип"
       ]
@@ -39,8 +39,8 @@
       "Category": "Птах",
       "Region": "Європейський біом",
       "DietType": "Хижак",
-      "Health": 100,
-      "Hunger": 74,
+      "Health": 0,
+      "Hunger": 100,
       "LinkedVets": [
         "Анна"
       ]
@@ -50,8 +50,8 @@
       "Category": "Птах",
       "Region": "Арктичний біом",
       "DietType": "Всеїдна",
-      "Health": 100,
-      "Hunger": 74,
+      "Health": 0,
+      "Hunger": 100,
       "LinkedVets": [
         "Марія"
       ]
@@ -61,8 +61,8 @@
       "Category": "Рептилія",
       "Region": "Південноамериканський біом",
       "DietType": "Хижак",
-      "Health": 100,
-      "Hunger": 74,
+      "Health": 0,
+      "Hunger": 100,
       "LinkedVets": [
         "Максим"
       ]
@@ -72,8 +72,17 @@
       "Category": "Ссавець",
       "Region": "Африканський біом",
       "DietType": "Травоїдна",
-      "Health": 100,
-      "Hunger": 70,
+      "Health": 0,
+      "Hunger": 100,
+      "LinkedVets": []
+    },
+    {
+      "Name": "Жираф",
+      "Category": "Ссавець",
+      "Region": "Африканський біом",
+      "DietType": "Травоїдна",
+      "Health": 96,
+      "Hunger": 78,
       "LinkedVets": []
     }
   ],
