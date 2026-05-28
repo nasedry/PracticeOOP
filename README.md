@@ -43,7 +43,11 @@
 ## Структурна UML-діаграма класів
 ![Дiаграма](dia.png )
 
+
+---
+
 ## Модульне тестування
+
 Проєкт покритий автоматизованими юніт-тестами на базі фреймворку xUnit. Тести побудовані за методологією AAA (Arrange-Act-Assert):
 1.`CarnivoreFeeding_WithCorrectFood_ShouldReturnSuccessMessage` — перевірка успішного відпрацювання стратегії годування хижака м'ясом.
 2.`CarnivoreFeeding_WithIncorrectFood_ShouldThrowZooException` — валідація виникнення помилки при спробі дати хижаку рослинний корм.
@@ -51,3 +55,6 @@
 4.`HerbivoreFeeding_WithMeat_ShouldThrowZooException`— тестування реакції травоїдної тварини на несумісний м'ясний раціон.
 5.`AfricanZooFactory_ShouldCreateMammalWithCarnivoreStrategy` — перевірка коректності створення об'єктів абстрактною фабрикою та автоматичного призначення правильної стратегії.
 6.`Observer_ShouldBeTriggered_WhenHealthDropsToCritical` — ізольована перевірка патерну спостерігача. Для усунення залежності від консолі та зовнішнього середовища використано бібліотеку Moq, за допомогою якої створено Mock-об'єкт ветеринара для фіксації виклику методу Update.
+
+---
+
