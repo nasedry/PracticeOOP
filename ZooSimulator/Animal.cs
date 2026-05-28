@@ -1,60 +1,101 @@
 using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
-[XmlInclude(typeof(Mammal))]
-[XmlInclude(typeof(Bird))]
-public abstract class Animal
+namespace ZooSimulator
 {
-    private string _name = string.Empty;
-    
-    public string Name
+    public class ZooException : Exception
     {
-        get => _name;
-        set
+        public ZooException(string message) : base(message) { }
+    }
+
+    public abstract class Animal
+    {
+        private int _health;
+        private int _hunger;
+        private readonly List<IObserver> _observers = new List<IObserver>();
+        private readonly object _lock = new object();
+
+        public string Name { get; set; }
+        public IFeedingStrategy? FeedingStrategy { get; set; }
+        public string Category { get; set; }
+
+        public int Hunger
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Ім'я не може бути порожнім!");
-            _name = value;
+            get { lock (_lock) return _hunger; }
+            set { lock (_lock) _hunger = Math.Clamp(value, 0, 100); }
+        }
+
+        public int Health
+        {
+            get { lock (_lock) return _health; }
+            set
+            {
+                lock (_lock) _health = Math.Clamp(value, 0, 100);
+                NotifyObservers();
+            }
+        }
+
+        protected Animal(string name, string category, int health, int hunger)
+        {
+            Name = name;
+            Category = category;
+            _health = health;
+            _hunger = hunger;
+        }
+
+        public void SetFeedingStrategy(IFeedingStrategy strategy) => FeedingStrategy = strategy;
+        public void RegisterObserver(IObserver observer) => _observers.Add(observer);
+        
+        private void NotifyObservers()
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update(Name, _health);
+            }
+        }
+
+        public void Feed(Food food)
+        {
+            if (Hunger <= 0)
+                throw new ZooException($"Тварина {Name} абсолютно сита. Годування скасовано!");
+
+            if (FeedingStrategy == null)
+                throw new ZooException($"Для тварини {Name} не задано раціон!");
+
+            string resultMessage = FeedingStrategy.Feed(Name, food);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"   {resultMessage}");
+            Console.ResetColor();
+            
+            Hunger -= food.NutritionalValue;
+            Console.WriteLine($"   Поточний рівень голоду для {Name}: {Hunger}%");
         }
     }
 
-    public int Health { get; set; }
-    public int Hunger { get; set; }
-
-    [XmlIgnore] // Серіалізатор не повинен зберігати підписників
-    private readonly List<IHealthObserver> _observers = new List<IHealthObserver>();
-
-    public Animal() { } // Порожній конструктор обов'язковий для серіалізації
-
-    public Animal(string name)
-    {
-        Name = name;
-        Health = 100;
-        Hunger = 0;
+    public class GenericAnimal : Animal 
+    { 
+        public GenericAnimal(string name, string category, int health, int hunger) : base(name, category, health, hunger) { } 
     }
 
-    public Animal(string name, int health, int hunger)
+    public interface IZooFactory
     {
-        Name = name;
-        Health = health;
-        Hunger = hunger;
+        Animal CreateCustomAnimal(string name, string category, string dietChoice);
     }
 
-    public void RegisterObserver(IHealthObserver observer)
+    public class UniversalZooFactory : IZooFactory
     {
-        _observers.Add(observer);
-    }
-
-    public void ChangeHealth(int newHealth)
-    {
-        Health = newHealth;
-        foreach (var observer in _observers)
+        public Animal CreateCustomAnimal(string name, string category, string dietChoice)
         {
-            observer.Update(this);
+            var animal = new GenericAnimal(name, category, 100, 30);
+            
+            if (dietChoice == "1")
+                animal.SetFeedingStrategy(new CarnivoreFeeding());
+            else if (dietChoice == "2")
+                animal.SetFeedingStrategy(new HerbivoreFeeding());
+            else
+                animal.SetFeedingStrategy(new OmnivoreFeeding());
+
+            return animal;
         }
     }
-
-    public abstract string GetSpeciesType();
-    public virtual void MakeSound() => Console.WriteLine("Тварина видає звук.");
 }
