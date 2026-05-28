@@ -108,3 +108,4 @@ D:\PracticeOOP\ZooSimulator.Tests\obj\Debug\net9.0\refint\ZooSimulator.Tests.dll
 D:\PracticeOOP\ZooSimulator.Tests\obj\Debug\net9.0\ZooSimulator.Tests.pdb
 D:\PracticeOOP\ZooSimulator.Tests\obj\Debug\net9.0\ZooSimulator.Tests.genruntimeconfig.cache
 D:\PracticeOOP\ZooSimulator.Tests\obj\Debug\net9.0\ref\ZooSimulator.Tests.dll
+D:\PracticeOOP\ZooSimulator.Tests\obj\Debug\net9.0\ZooSimulator.Tests.sourcelink.json

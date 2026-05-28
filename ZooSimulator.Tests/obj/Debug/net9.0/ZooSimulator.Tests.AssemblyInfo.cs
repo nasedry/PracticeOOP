@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZooSimulator.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0cf750c9fb82aea5ecec1851e9b7c529c0a7f6a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZooSimulator.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZooSimulator.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -81,8 +81,8 @@
       "Category": "Ссавець",
       "Region": "Африканський біом",
       "DietType": "Травоїдна",
-      "Health": 96,
-      "Hunger": 78,
+      "Health": 4,
+      "Hunger": 100,
       "LinkedVets": []
     }
   ],
